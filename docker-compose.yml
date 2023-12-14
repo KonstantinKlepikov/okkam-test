@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+
+  okkam-api:
+    image: okkam-api
+    container_name: okkam-api
+    expose:
+      - "8000"
+    build:
+      context: ./api
+      dockerfile: api.dockerfile
+    volumes:
+      - ./api/app:/app

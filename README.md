@@ -46,3 +46,39 @@
 - Позаботиться об отказоустойчивости
 - Позаботиться о быстродействии (учитывая, что данные не будут изменены ретроспективно)
 - Порядок в коде – `pep8`, докстринги, тайпинг, структура проекта
+
+## Run or stop stack from root
+
+- `make serve` to run dev mode
+- `make down` to stop
+
+### Use local resources to watch project
+
+- [api swagger docs](http://localhost:8100/docs/)
+- [api redoc](http://localhost:8100/redoc/)
+
+### Develop with each service
+
+1. Go to service folder, f.e. `cd data-api/app` and create VSCode project by `code .`
+2. Install poery dependencies and add environment for python linting. Use `poetry config virtualenvs.in-project true` for creation of env folder inside project. Then `poetry install --with dev`.
+3. Inside container use:
+
+    - `pytest -v -s -x` for all tests
+    - use `python -m IPython` to check code
+    - `mypy --install-types`
+    - `mypy app` and `flake8 app`
+
+## TO-DO
+
+- [x] docker stack
+- [ ] db models
+- [ ] init dev db (dump)
+- [ ] init and mock test db
+- [ ] alembic migration
+- [ ] pgadmin for vscode dev
+- [ ] crud
+- [ ] api models
+- [ ] logic
+- [ ] endpoint
+- [ ] tests
+- [ ] docs

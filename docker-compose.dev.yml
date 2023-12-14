@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+
+  okkam-postgres-dev:
+    image: postgres:12
+    container_name: okkam-postgres-dev
+    volumes:
+      - okkam-postgres-data:/var/lib/postgresql/data/pgdata
+    env_file: .env
+    ports:
+      - 5160:5432
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
+      - POSTGRES_USER=${POSTGRES_USER?Variable not set}
+      - POSTGRES_DB=${POSTGRES_DB?Variable not set}
+    networks:
+      - okkam-dev
+    restart: unless-stopped
+
+
+  okkam-postgres-test:
+    image: postgres:12
+    container_name: okkam-postgres-test
+    env_file: .env
+    environment:
+      - POSTGRES_PASSWORD=${TEST_POSTGRES_PASSWORD?Variable not set}
+      - POSTGRES_USER=${TEST_POSTGRES_USER?Variable not set}
+      - POSTGRES_DB=${TEST_POSTGRES_DB?Variable not set}
+    networks:
+      - okkam-dev
+    restart: always
+
+  okkam-api:
+    ports:
+      - "8100:8000"
+    env_file: .env
+    build:
+      args:
+        INSTALL_DEV: ${INSTALL_DEV-true}
+    depends_on:
+      - okkam-postgres-dev
+      - okkam-postgres-test
+    networks:
+      - okkam-dev
+
+
+volumes:
+  okkam-postgres-data:
+    driver: local
+
+
+networks:
+  okkam-dev:
