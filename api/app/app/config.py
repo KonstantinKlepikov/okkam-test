@@ -28,8 +28,8 @@ class Settings(BaseSettings):
     version: str = poetry_data['version']
     openapi_tags: list = [
         {
-            "name": "root",
-            "description": "Root api",
+            "name": "percent",
+            "description": "percent api",
         },
     ]
     ERRORS: ErrorType = {

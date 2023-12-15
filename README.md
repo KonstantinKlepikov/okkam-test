@@ -71,11 +71,11 @@
 ## TO-DO
 
 - [x] docker stack
-- [ ] db models
+- [x] db models
 - [ ] init dev db (dump)
 - [ ] init and mock test db
-- [ ] alembic migration
-- [ ] pgadmin for vscode dev
+- [x] alembic migration
+- [x] pgadmin for vscode dev
 - [ ] crud
 - [ ] api models
 - [ ] logic

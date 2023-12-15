@@ -18,5 +18,11 @@ class BaseEnum(Enum):
 
 
 class BaseStrEnum(str, BaseEnum):
-    """Base class for enumeration
+    """Base class for str enumeration
     """
+
+
+class Sex(BaseEnum):
+    """Respondent sex"""
+    M = 1
+    W = 2

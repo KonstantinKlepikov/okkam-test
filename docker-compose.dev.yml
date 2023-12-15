@@ -9,7 +9,7 @@ services:
       - okkam-postgres-data:/var/lib/postgresql/data/pgdata
     env_file: .env
     ports:
-      - 5160:5432
+      - "5160:5432"
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
