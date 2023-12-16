@@ -150,4 +150,4 @@ cython_debug/
 docker-stack.yml
 
 # dump
-api/app/data/*.*
+# api/app/data/*.*

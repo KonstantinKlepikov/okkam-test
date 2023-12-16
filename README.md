@@ -72,11 +72,11 @@
 
 - [x] docker stack
 - [x] db models
-- [ ] init dev db (dump)
+- [x] init dev db (dump)
 - [ ] init and mock test db
 - [x] alembic migration
 - [x] pgadmin for vscode dev
-- [ ] crud
+- [x] crud
 - [ ] api models
 - [ ] logic
 - [ ] endpoint
