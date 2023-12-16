@@ -16,6 +16,9 @@ poetry_data = toml.load('pyproject.toml')['tool']['poetry']
 
 
 class Settings(BaseSettings):
+    # dev mode
+    DEV_MODE: bool = False
+
     # api vars
     API_V1: str = "/api/v1"
 

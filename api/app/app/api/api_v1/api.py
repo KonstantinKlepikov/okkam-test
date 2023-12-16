@@ -1,4 +1,4 @@
-from api.api_v1.endpoints import percent
+from app.api.api_v1.endpoints import percent
 from fastapi import APIRouter
 
 

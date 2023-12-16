@@ -23,14 +23,42 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self.model = model
 
     def get(self, db: Session, id: Any) -> ModelType | None:
+        """Get respondent by db id
+
+        Args:
+            db (Session): session
+            id (Any): db id
+
+        Returns:
+            ModelType | None: query result
+        """
         return db.query(self.model).filter(self.model.id == id).first()
 
     def get_many(
         self, db: Session, *, skip: int = 0, limit: int = 100
     ) -> list[ModelType]:
+        """Get many respondents with skip and limit parameters
+
+        Args:
+            db (Session): session_
+            skip (int, optional): Defaults to 0.
+            limit (int, optional): Defaults to 100.
+
+        Returns:
+            list[ModelType]: query result
+        """
         return db.query(self.model).offset(skip).limit(limit).all()
 
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
+        """Create respondent
+
+        Args:
+            db (Session): session_
+            obj_in (CreateSchemaType): respondent data
+
+        Returns:
+            ModelType: db model
+        """
         obj_in_data = jsonable_encoder(obj_in)
         db_obj = self.model(**obj_in_data)  # type: ignore
         db.add(db_obj)
@@ -45,6 +73,16 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db_obj: ModelType,
         obj_in: UpdateSchemaType | dict[str, Any]
     ) -> ModelType:
+        """Update respondent
+
+        Args:
+            db (Session): session
+            db_obj (ModelType): _model to update
+            obj_in (UpdateSchemaType | dict[str, Any]): respondent data
+
+        Returns:
+            ModelType: db model
+        """
         obj_data = jsonable_encoder(db_obj)
         if isinstance(obj_in, dict):
             update_data = obj_in
@@ -59,6 +97,15 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return db_obj
 
     def remove(self, db: Session, *, id: int) -> ModelType:
+        """Remove respondent
+
+        Args:
+            db (Session): session
+            id (Any): db id
+
+        Returns:
+            ModelType: db model
+        """
         obj = db.query(self.model).get(id)
         db.delete(obj)
         db.commit()

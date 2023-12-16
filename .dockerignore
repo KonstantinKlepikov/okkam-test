@@ -1,4 +1,3 @@
-api/app/app/data/*
 api/app/log/*
 **/__pycache__
 **/.pytest_cache

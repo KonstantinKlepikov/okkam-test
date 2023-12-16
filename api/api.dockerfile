@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y git curl && \
 
 # Copy poetry.lock* in case it doesn't exist in the repo
 COPY ./app /app
-COPY ./api-start.sh /api-start.sh
+COPY ./api-start-dev.sh /api-start.sh
 WORKDIR /app
 ENV PYTHONPATH=/app
 
