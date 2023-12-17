@@ -124,5 +124,5 @@ TEST_DATABASE_URL=postgresql://${TEST-POSTGRES_USER}:${TEST-POSTGRES_PASSWORD}@o
 - [x] logic
 - [x] endpoint
 - [ ] tests
-- [x] mypy
+- [ ] mypy
 - [x] docs
