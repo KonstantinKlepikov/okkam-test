@@ -151,3 +151,4 @@ docker-stack.yml
 
 # dump
 # api/app/data/*.*
+*.sql

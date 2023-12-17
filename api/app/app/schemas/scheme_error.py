@@ -49,16 +49,3 @@ class HttpError409(HttpErrorMessage):
                     "Something wrong with client or server data",
                 }
             }
-
-
-class HttpError429(HttpErrorMessage):
-    """429 To Many Requests
-    """
-
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "detail":
-                    "To Many Requests",
-                }
-            }

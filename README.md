@@ -1,6 +1,6 @@
 # Okkam-test
 
-## Task
+## Задача
 
 Имеется дамп базы data.csv со следующими полями:
 
@@ -47,26 +47,68 @@
    - Позаботиться о быстродействии (учитывая, что данные не будут изменены ретроспективно)
    - Порядок в коде – `pep8`, докстринги, тайпинг, структура проекта
 
-## Run or stop stack from root
+## Результат работы и креативы
 
-- `make serve` to run dev mode
-- `make down` to stop
+Всего на задачу ушло 12 часов.
 
-### Use local resources to watch project
+Сделано:
 
-- [api swagger docs](http://localhost:8100/docs/)
-- [api redoc](http://localhost:8100/redoc/)
+- развернуты докер-сворм стек, postgres dev, postgres test, api
+- реализован dev stage
+- реализован апи с версионированием на базе fastapi. Работает swaggher и redoc документация
+- сделана интеграция с бд на базе alemic и SQLAlchemy (автомиграции, модели) - в данном случае я расширил задачу, чтобы показать, что я умею работать с данными инстурментами
+- модель бд расширена мной до двух таблиц (чтобы показать концепцию crud и работу с джойнами в рав запросе)
+- реализована автозагрузка данных в dev базу не через дамп, а через функционал апи sqlalchemy
+- сделан базовый crud
+- аналитический запрос к бд для эндпоинта реализован на чистом sql
+- реализованы проверки входных данных (возраста)
+- сам эдпоинт реализован в виде post-запроса с request body. Это тоже не совпадает с заданным в задаче, но тут я предлагаю просто не слать сырой sql в виде строк по апи, а реализовать нормальный защищенный запрос. В конечном счете в реальных условиях это так и было бы.
+- flake8 соблюден, код аннотирован и добавлены комментарии (на нерусском)
 
-### Develop with each service
+Что не сделано:
 
-1. Go to service folder, f.e. `cd data-api/app` and create VSCode project by `code .`
-2. Install poery dependencies and add environment for python linting. Use `poetry config virtualenvs.in-project true` for creation of env folder inside project. Then `poetry install --with dev`.
-3. Inside container use:
+- вообще не успел написать тесты. Задача большая, к сожалению никак не получалось по времени. Тесты могу делать любые юнит на базе pytest, с моками и любым цирокм. Если надо, могу функциональное тестирование
+- не выполнен mypy - обычно с mypy много возни, там сейчас выпадает небольшое количество ошибок, но если раскопать, может быть всякое. Не успел.
+- быстродействие соответственно тоже не успел. Надо проверять запрос, остальное все ок
+- "отказоустойчивость" без тестов естественно нет
 
-    - `pytest -v -s -x` for all tests
-    - use `python -m IPython` to check code
+## Разработка локально
+
+Для запуска необходимо клонировать репозиторий и поместить в корень репозитория `.env` файл следующего содержания
+
+```bash
+# postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=mybrilliantpassword
+POSTGRES_DB=okkam
+POSTGRES_SERVER=okkam-postgres-dev
+DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_SERVER}:5432/${POSTGRES_DB}
+
+TEST_POSTGRES_USER=postgres
+TEST_POSTGRES_PASSWORD=mybrilliantpassword
+TEST_POSTGRES_DB=okkam-test
+TEST_DATABASE_URL=postgresql://${TEST-POSTGRES_USER}:${TEST-POSTGRES_PASSWORD}@okkam-postgres-test:5432/${TEST-POSTGRES_DB}
+```
+
+Вам потребуется `docker compose 3.8` и утилита `make` для запуска стека.
+
+## Запуск и остановка стека
+
+1. Для vscode создайnt проект `code .`
+2. Установите `poetry` окружение и подготовьте линтер. Для этого используйте `poetry config virtualenvs.in-project true` и команду `poetry install --with dev`. `pyproject.toml` находится в папке `api/app` Не забудьте перезапустить IDE.
+3. Старт и шотдаун:
+
+   - `make serve`
+   - `make down`
+
+4. Внутри контейнера можно выполнить:
+
+    - `pytest -v -s -x` для тестирования
+    - используйте `python -m IPython` для проверок кода
     - `mypy --install-types`
-    - `mypy app` and `flake8 app`
+    - `mypy app` и `flake8 app`
+
+- пересобрать отдельный сервис можно так `docker compose up -d --no-deps --build <service-name>`
 
 ## TO-DO
 
@@ -77,8 +119,9 @@
 - [x] alembic migration
 - [x] pgadmin for vscode dev
 - [x] crud
-- [ ] api models
-- [ ] logic
-- [ ] endpoint
+- [x] api models
+- [x] logic
+- [x] endpoint
 - [ ] tests
-- [ ] docs
+- [ч] mypy
+- [x] docs
